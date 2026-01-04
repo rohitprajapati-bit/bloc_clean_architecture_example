@@ -5,30 +5,33 @@ class AppException implements Exception {
 
   @override
   String toString() {
-    return '$_prefix$_massage';
+    if (_massage == null || _massage.toString().isEmpty) {
+      return '$_prefix';
+    }
+    return '$_prefix: $_massage';
   }
 }
 
 class NoInternetException extends AppException {
   NoInternetException([String? massage])
-    : super(massage, 'No Internet Exception: ');
+    : super(massage, 'No Internet Connection');
 }
 
 class UnauthorizedException extends AppException {
   UnauthorizedException([String? massage])
-      : super(massage, 'Unauthorized Exception: ');
+    : super(massage, 'Unauthorized Exception');
 }
 
 class TimeoutException extends AppException {
-  TimeoutException([String? massage])
-      : super(massage, 'Timeout Exception: ');
+  TimeoutException([String? massage]) : super(massage, 'Timeout Exception');
 }
 
 class BadRequestException extends AppException {
   BadRequestException([String? massage])
-      : super(massage, 'Bad Request Exception: ');
+    : super(massage, 'Bad Request Exception');
 }
+
 class FetchDataException extends AppException {
   FetchDataException([String? massage])
-      : super(massage, 'Fetch Data Exception: ');
+    : super(massage, 'Fetch Data Exception');
 }
