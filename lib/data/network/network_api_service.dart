@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:async' as async;
 import 'dart:convert';
 import 'dart:io';
 import 'package:bloc_clean_architecture/data/exceptions/app_exception.dart';
@@ -15,9 +15,9 @@ class NetworkApiService implements BaseApiService {
       final response = await http.get(Uri.parse(url)).timeout(timeout);
       return _handleResponse(response);
     } on SocketException {
-      throw NoInternetException();
-    } on TimeoutException {
-      throw TimeoutException();
+      throw NoInternetException('');
+    } on async.TimeoutException {
+      throw TimeoutException('');
     }
   }
 
@@ -33,9 +33,9 @@ class NetworkApiService implements BaseApiService {
           .timeout(timeout);
       return _handleResponse(response);
     } on SocketException {
-      throw NoInternetException();
-    } on TimeoutException {
-      throw TimeoutException();
+      throw NoInternetException('');
+    } on async.TimeoutException {
+      throw TimeoutException('');
     }
   }
 
@@ -45,9 +45,9 @@ class NetworkApiService implements BaseApiService {
       final response = await http.delete(Uri.parse(url)).timeout(timeout);
       return _handleResponse(response);
     } on SocketException {
-      throw NoInternetException();
-    } on TimeoutException {
-      throw TimeoutException();
+      throw NoInternetException('');
+    } on async.TimeoutException {
+      throw TimeoutException('');
     }
   }
 
