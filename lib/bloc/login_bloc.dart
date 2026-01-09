@@ -3,19 +3,17 @@ import 'package:bloc_clean_architecture/repository/auth/login_repository.dart';
 import 'package:bloc_clean_architecture/utils/enums.dart';
 import 'package:equatable/equatable.dart';
 
+import '../services/session_manager/session_controller.dart';
+
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginRepository loginRepository = LoginRepository();
-  LoginBloc() : super(LoginState()) {
+  LoginRepository loginRepository;
+  LoginBloc({required this.loginRepository}) : super(LoginState()) {
     on<ChangeEmail>(_changeEmail);
     on<ChangePassword>(_changePassword);
-
     on<SubmitButtonPressed>(_submitButtonPressed);
-
-    // on<UnFocusEmail>(_unFocusEmail);
-    // on<UnFocusPassword>(_unFocusPassword);
   }
 
   void _changeEmail(ChangeEmail event, Emitter<LoginState> emit) {
@@ -35,8 +33,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(loginStatus: LoginStatus.loading));
 
     await loginRepository
-        .loginAPi(data)
-        .then((value) {
+        .loginApi(data)
+        .then((value) async {
           if (value.error.isNotEmpty) {
             emit(
               state.copyWith(
@@ -45,9 +43,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               ),
             );
           } else {
+            await SessionController().svaUserInPreference(value);
+            await SessionController().getUserFromPreference();
+
             emit(
               state.copyWith(
-                massage: value.token,
+                massage: 'Login Success',
                 loginStatus: LoginStatus.success,
               ),
             );

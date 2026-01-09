@@ -1,6 +1,7 @@
 import 'package:bloc_clean_architecture/bloc/login_bloc.dart';
 import 'package:bloc_clean_architecture/config/components/app_loding_widget.dart'
     show AppLodingWidget;
+import 'package:bloc_clean_architecture/config/routes/routes_name.dart';
 import 'package:bloc_clean_architecture/utils/enums.dart';
 import 'package:bloc_clean_architecture/utils/flush_bar_helper.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,11 @@ class LoginButtonWidget extends StatelessWidget {
         //     ..showSnackBar(SnackBar(content: Text('Submitting...')));
         // }
         if (state.loginStatus == LoginStatus.success) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RoutesName.homeScreen,
+            (route) => false,
+          );
           FlushBarHelper.flushBarSuccessMessage('Login Successfully', context);
           // ScaffoldMessenger.of(context)
           //   ..hideCurrentSnackBar()

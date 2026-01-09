@@ -2,6 +2,8 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 class FlushBarHelper {
+  static Flushbar? _currentFlushbar;
+
   static void flushBarErrorMessage(String message, BuildContext context) {
     showFlushBar(message, context, Colors.red, Icons.error);
   }
@@ -16,8 +18,8 @@ class FlushBarHelper {
     Color backgroundColor,
     IconData iconData,
   ) {
-    Flushbar(
-      forwardAnimationCurve: Curves.decelerate,
+    _currentFlushbar?.dismiss();
+    _currentFlushbar = Flushbar(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(15),
       message: message,
@@ -25,9 +27,11 @@ class FlushBarHelper {
       borderRadius: BorderRadius.circular(8),
       flushbarPosition: FlushbarPosition.TOP,
       backgroundColor: backgroundColor,
-      reverseAnimationCurve: Curves.easeInOut,
+      forwardAnimationCurve: Curves.linear,
+      reverseAnimationCurve: Curves.linear,
       positionOffset: 20,
       icon: Icon(iconData, size: 28, color: Colors.white),
-    ).show(context);
+    );
+    _currentFlushbar!.show(context);
   }
 }

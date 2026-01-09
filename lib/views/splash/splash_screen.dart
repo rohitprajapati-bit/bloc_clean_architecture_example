@@ -1,4 +1,5 @@
 import 'package:bloc_clean_architecture/config/routes/routes_name.dart';
+import 'package:bloc_clean_architecture/services/splash/splash_service.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,14 +13,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    navigateToLoginScreen();
+    SplashService.isLogin(context);
   }
 
-  Future<void> navigateToLoginScreen()async{
-    await Future.delayed(const Duration(seconds: 3));
-    if (!mounted) return;
-    Navigator.pushNamed(context, RoutesName.loginScreen);
-  }
+  // Future<void> navigateToLoginScreen()async{
+  //   await Future.delayed(const Duration(seconds: 3));
+  //   if (!mounted) return;
+  //   Navigator.pushNamed(context, RoutesName.loginScreen);
+  // }
 
   @override
   Widget build(BuildContext context) {
