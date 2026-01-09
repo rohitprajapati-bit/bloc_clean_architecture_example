@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../../model/user_model.dart';
+import '../../model/user/user_model.dart';
 import '../storage/local_storage.dart';
 
 class SessionController {

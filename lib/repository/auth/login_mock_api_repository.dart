@@ -1,4 +1,4 @@
-import 'package:bloc_clean_architecture/model/user_model.dart';
+import 'package:bloc_clean_architecture/model/user/user_model.dart';
 
 import 'login_repository.dart';
 
