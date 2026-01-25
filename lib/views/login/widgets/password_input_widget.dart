@@ -1,4 +1,5 @@
-import 'package:bloc_clean_architecture/bloc/login_bloc.dart';
+import 'package:bloc_clean_architecture/bloc/login_bloc/login_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +12,9 @@ class PasswordInputWidget extends StatelessWidget {
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
-        print('password build');
+        if (kDebugMode) {
+          print('password build');
+        }
         return TextFormField(
           keyboardType: TextInputType.text,
           focusNode: passwordFocusNode,

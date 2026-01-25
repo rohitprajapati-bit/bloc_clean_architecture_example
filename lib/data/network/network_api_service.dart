@@ -15,9 +15,14 @@ class NetworkApiService implements BaseApiService {
       final response = await http.get(Uri.parse(url)).timeout(timeout);
       return _handleResponse(response);
     } on SocketException {
+      if (kDebugMode) print('NetworkApiService: SocketException');
       throw NoInternetException('');
     } on async.TimeoutException {
-      throw TimeoutException('');
+      if (kDebugMode) print('NetworkApiService: TimeoutException');
+      throw TimeoutException('Request timed out');
+    } catch (e) {
+      if (kDebugMode) print('NetworkApiService: Unknown Exception $e');
+      rethrow;
     }
   }
 
@@ -35,7 +40,7 @@ class NetworkApiService implements BaseApiService {
     } on SocketException {
       throw NoInternetException('');
     } on async.TimeoutException {
-      throw TimeoutException('');
+      throw TimeoutException('Request timed out');
     }
   }
 
@@ -47,28 +52,32 @@ class NetworkApiService implements BaseApiService {
     } on SocketException {
       throw NoInternetException('');
     } on async.TimeoutException {
-      throw TimeoutException('');
+      throw TimeoutException('Request timed out');
     }
   }
 
   dynamic _handleResponse(http.Response response) {
-    dynamic responseJson = jsonDecode(response.body);
+    dynamic responseJson;
+    if (response.body.isNotEmpty) {
+      responseJson = jsonDecode(response.body);
+    }
+
     switch (response.statusCode) {
       case 200:
       case 201:
         return responseJson;
       case 400:
-        throw BadRequestException("Bad Request");
-
+        throw BadRequestException(responseJson?['message']);
       case 401:
       case 403:
-        throw UnauthorizedException("Unauthorized");
-
+        throw UnauthorizedException(responseJson?['message']);
       case 404:
-        throw FetchDataException("Resource not found");
+        throw FetchDataException(responseJson?['message']);
       case 500:
       default:
-        throw 'Error occured while communicating with server with status code : ${response.statusCode}';
+        throw FetchDataException(
+          'Server Error with status code : ${response.statusCode}',
+        );
     }
   }
 }

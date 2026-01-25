@@ -1,4 +1,4 @@
-import 'package:bloc_clean_architecture/bloc/login_bloc.dart';
+import 'package:bloc_clean_architecture/bloc/login_bloc/login_bloc.dart';
 import 'package:bloc_clean_architecture/config/components/app_loding_widget.dart'
     show AppLodingWidget;
 import 'package:bloc_clean_architecture/config/routes/routes_name.dart';
@@ -20,7 +20,7 @@ class LoginButtonWidget extends StatelessWidget {
         //     ..hideCurrentSnackBar()
         //     ..showSnackBar(SnackBar(content: Text('Submitting...')));
         // }
-        if (state.loginStatus == LoginStatus.success) {
+        if (state.loginStatus == Status.success) {
           Navigator.pushNamedAndRemoveUntil(
             context,
             RoutesName.homeScreen,
@@ -31,7 +31,7 @@ class LoginButtonWidget extends StatelessWidget {
           //   ..hideCurrentSnackBar()
           //   ..showSnackBar(SnackBar(content: Text('Success')));
         }
-        if (state.loginStatus == LoginStatus.failure) {
+        if (state.loginStatus == Status.failure) {
           FlushBarHelper.flushBarErrorMessage('Login Failed', context);
           // ScaffoldMessenger.of(context)
           //   ..hideCurrentSnackBar()
@@ -43,7 +43,7 @@ class LoginButtonWidget extends StatelessWidget {
         buildWhen: (previous, current) =>
             previous.loginStatus != current.loginStatus,
         builder: (context, state) {
-          return state.loginStatus == LoginStatus.loading
+          return state.loginStatus == Status.loading
               ? AppLodingWidget()
               : ElevatedButton(
                   onPressed: () {

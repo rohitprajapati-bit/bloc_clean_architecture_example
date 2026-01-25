@@ -1,5 +1,6 @@
-import 'package:bloc_clean_architecture/bloc/login_bloc.dart';
-import 'package:bloc_clean_architecture/main.dart';
+import 'package:bloc_clean_architecture/bloc/login_bloc/login_bloc.dart';
+import 'package:bloc_clean_architecture/dependency_injection/locator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/widget.dart';
@@ -22,10 +23,17 @@ class _LoginScreenState extends State<LoginScreen> {
     _loginBloc = LoginBloc(loginRepository: getIt());
     super.initState();
   }
+  @override
+  void dispose() {
+    _loginBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    print('Login Screen');
+    if (kDebugMode) {
+      print('Login Screen');
+    }
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: BlocProvider(

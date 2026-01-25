@@ -1,14 +1,15 @@
 import 'package:bloc_clean_architecture/config/routes/routes.dart';
 import 'package:bloc_clean_architecture/config/routes/routes_name.dart';
-import 'package:bloc_clean_architecture/repository/auth/login_http_api_repository.dart';
-import 'package:bloc_clean_architecture/repository/auth/login_mock_api_repository.dart';
-import 'package:bloc_clean_architecture/repository/auth/login_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'dependency_injection/locator.dart';
 
-GetIt getIt = GetIt.instance;
+ServiceLocator dependencyInjector = ServiceLocator();
+
 void main() {
-  serviceLocator();
+  WidgetsFlutterBinding.ensureInitialized();
+  dependencyInjector.serviceLocator();
   runApp(const MyApp());
 }
 
@@ -19,10 +20,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: RoutesName.splashScreen,
       onGenerateRoute: Routes.generateRoute,
+      locale: Locale('es'),
+      localizationsDelegates: [
+        AppLocalizations.delegate, 
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('es'), // Spanish
+      ],
     );
   }
-}
-
-void serviceLocator() {
-  getIt.registerLazySingleton<LoginRepository>(() => LoginMockApiRepository());
 }

@@ -1,5 +1,5 @@
-import 'package:bloc_clean_architecture/bloc/login_bloc.dart';
-import 'package:bloc_clean_architecture/utils/validations.dart';
+import 'package:bloc_clean_architecture/bloc/login_bloc/login_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +12,9 @@ class EmailInputWidget extends StatelessWidget {
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
-        print('email build');
+        if (kDebugMode) {
+          print('email build');
+        }
         return TextFormField(
           keyboardType: TextInputType.emailAddress,
           focusNode: emailFocusNode,

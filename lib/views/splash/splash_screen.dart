@@ -1,4 +1,3 @@
-import 'package:bloc_clean_architecture/config/routes/routes_name.dart';
 import 'package:bloc_clean_architecture/services/splash/splash_service.dart';
 import 'package:flutter/material.dart';
 

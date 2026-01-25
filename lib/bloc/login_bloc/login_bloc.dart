@@ -3,7 +3,7 @@ import 'package:bloc_clean_architecture/repository/auth/login_repository.dart';
 import 'package:bloc_clean_architecture/utils/enums.dart';
 import 'package:equatable/equatable.dart';
 
-import '../services/session_manager/session_controller.dart';
+import '../../services/session_manager/session_controller.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -30,7 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     Map data = {"username": state.email, "password": state.password};
 
-    emit(state.copyWith(loginStatus: LoginStatus.loading));
+    emit(state.copyWith(loginStatus: Status.loading));
 
     await loginRepository
         .loginApi(data)
@@ -39,7 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             emit(
               state.copyWith(
                 massage: value.error.toString(),
-                loginStatus: LoginStatus.failure,
+                loginStatus: Status.failure,
               ),
             );
           } else {
@@ -49,7 +49,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             emit(
               state.copyWith(
                 massage: 'Login Success',
-                loginStatus: LoginStatus.success,
+                loginStatus: Status.success,
               ),
             );
           }
@@ -58,7 +58,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(
             state.copyWith(
               massage: error.toString(),
-              loginStatus: LoginStatus.failure,
+              loginStatus: Status.failure,
             ),
           );
         });

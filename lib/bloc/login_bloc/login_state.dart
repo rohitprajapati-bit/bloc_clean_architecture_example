@@ -7,7 +7,7 @@ class LoginState extends Equatable {
   // final bool isPasswordValid;
   // final bool isSubmitting;
   // final bool submitFailure;
-  final LoginStatus loginStatus;
+  final Status loginStatus;
   final String massage;
 
   const LoginState({
@@ -17,7 +17,7 @@ class LoginState extends Equatable {
     // this.isPasswordValid = false,
     // this.isSubmitting = false,
     // this.submitFailure = false,
-    this.loginStatus = LoginStatus.initial,
+    this.loginStatus = Status.initial,
     this.massage = '',
   });
 
@@ -28,7 +28,7 @@ class LoginState extends Equatable {
     // bool? isPasswordValid,
     // bool? isSubmitting,
     // bool? submitFailure,
-    LoginStatus? loginStatus,
+    Status? loginStatus,
     String? massage,
   }) {
     return LoginState(
